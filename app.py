@@ -25,7 +25,7 @@ DATABASE_URL = config.DATABASE_URL
 
 @login_manager.user_loader
 def load_user(user_id):
-    with psycopg2.connect(DATABASE_URL) as conn:
+    with get_db_connection() as conn:
         with conn.cursor() as cursor:
             cursor.execute('SELECT * FROM users WHERE id = %s', (user_id,))
             user_data = cursor.fetchone()
